@@ -1,13 +1,13 @@
 'importo la clase para conectar con la BD
 Imports MySqlConnector
 
-'SERVICIO DEL PROFESOR
+
 'consultas del panel del profesor
 Public Class ServiceProfesor
 
     '---------------------- CURSOS ----------------------
 
-    'traigo los cursos del profesor, con el JOIN saco el nombre de la categoria
+    'traigo los cursos del profesor
     'uso LIKE para el buscador
     Public Shared Function ListarCursos(profesorId As Integer, filtro As String) As DataTable
         Dim sql As String =
@@ -114,9 +114,8 @@ Public Class ServiceProfesor
 
     '---------------------- ALUMNOS ----------------------
 
-    'traigo los alumnos de un curso con la inscripcion aceptada (ya pagaron)
-    'JOIN con la tabla puente: alumnos -> inscripciones -> cursos
-    'filtroAvance: 0 todos, 1 sin empezar, 2 en curso, 3 finalizados
+    'traigo los alumnos de un curso con la inscripcion aceptada 
+
     Public Shared Function ListarAlumnos(cursoId As Integer, profesorId As Integer, filtroAvance As Integer) As DataTable
         'cuento completadas y total con subconsultas
         Dim sql As String =

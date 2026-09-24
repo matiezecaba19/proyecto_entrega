@@ -1,7 +1,7 @@
 'importo para usar MySqlException
 Imports MySqlConnector
 
-'PANEL DEL PROFESOR (las consultas estan en ServiceProfesor)
+'PANEL DEL PROFESOR 
 Public Class profesor
 
     'al abrir el form
