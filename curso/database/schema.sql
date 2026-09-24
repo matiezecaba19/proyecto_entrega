@@ -1,7 +1,12 @@
 -- ============================================================
 -- Sistema de Gestion de Cursos - Esquema de Base de Datos
 -- Motor: MariaDB 11.8
+-- Crea la base desde cero con todos los datos de prueba
+-- Importar: mariadb -u root -p < schema.sql
+-- OJO: si ya existe la base proyecto la borra y la crea de nuevo
 -- ============================================================
+
+DROP DATABASE IF EXISTS proyecto;
 
 CREATE DATABASE IF NOT EXISTS proyecto
     CHARACTER SET utf8mb4
@@ -171,18 +176,63 @@ LEFT JOIN progreso_leccion pl ON pl.inscripcion_id = i.id AND pl.leccion_id = l.
 GROUP BY i.id, a.id, a.nombre, a.apellido, c.id, c.titulo, i.estado;
 
 -- ============================================================
--- 5. DATOS INICIALES - ADMINISTRADOR
--- password_hash generado con BCrypt (BCrypt.Net-Next, igual que
--- ServiceAutenticacion.GenerarHash). Empieza con $2a$ y tiene 60 caracteres.
--- Contrasena real: matias123
+-- 5. DATOS DE PRUEBA
+-- password_hash generado con BCrypt (igual que ServiceAutenticacion.generarHash)
+-- Contraseñas: admin matias123, profesor profesor123,
+-- cobranza cobranza123, alumnos alumno123
 -- ============================================================
 
-INSERT INTO administradores (nombre, apellido, dni, email, password_hash, estado)
-VALUES (
-    'Matias',
-    'Caballero',
-    '43025150',
-    'matiezecaba19@gmail.com',
-    '$2a$11$zct12tJEB5biWqJPkUjuRemNW60EIKTFj7HncNt/EG1zOPYeE08da',
-    'activo'
-);
+-- administradores
+INSERT INTO administradores (id, nombre, apellido, dni, email, password_hash, estado, fecha_creacion) VALUES (1,'Matias','Caballero','43025150','matiezecaba19@gmail.com','$2a$11$zct12tJEB5biWqJPkUjuRemNW60EIKTFj7HncNt/EG1zOPYeE08da','activo','2026-09-21 17:57:43');
+
+-- profesores
+INSERT INTO profesores (id, nombre, apellido, dni, email, password_hash, estado, descripcion, fecha_creacion) VALUES (1,'Juan','Perez','30111222','juan.perez@prueba.com','$2a$11$vf5Q1xd1usapTqvvHddv4u2.NyqghMXAenDwL0ZgT6G8/abhMUYp6','activo','Programador .NET con 10 años de experiencia. Me gusta enseñar desde cero y con ejemplos prácticos.','2026-09-21 18:57:40');
+
+-- cobranza
+INSERT INTO cobranza (id, nombre, apellido, dni, email, password_hash, estado, fecha_creacion) VALUES (1,'Laura','Diaz','35111222','laura.diaz@prueba.com','$2a$11$5H3q3fJGFZtETsi60zxlQePCz.xPIcOO6R/z4RXGaqyF8AgEof2h.','activo','2026-09-21 19:33:16');
+
+-- alumnos
+INSERT INTO alumnos (id, nombre, apellido, dni, email, password_hash, estado, fecha_creacion) VALUES (1,'Ana','Gomez','40111222','ana.gomez@prueba.com','$2a$11$hd.uSqkdBBsu9mUyAsu0Qu/WxF2v9TQPEI1bLjxu25obWtEotE8Ty','activo','2026-09-21 18:57:40');
+INSERT INTO alumnos (id, nombre, apellido, dni, email, password_hash, estado, fecha_creacion) VALUES (3,'Carlos','Lopez','40222333','carlos.lopez@prueba.com','$2a$11$hd.uSqkdBBsu9mUyAsu0Qu/WxF2v9TQPEI1bLjxu25obWtEotE8Ty','activo','2026-09-24 07:25:22');
+INSERT INTO alumnos (id, nombre, apellido, dni, email, password_hash, estado, fecha_creacion) VALUES (4,'Lucia','Fernandez','40333444','lucia.fernandez@prueba.com','$2a$11$hd.uSqkdBBsu9mUyAsu0Qu/WxF2v9TQPEI1bLjxu25obWtEotE8Ty','activo','2026-09-24 07:25:22');
+INSERT INTO alumnos (id, nombre, apellido, dni, email, password_hash, estado, fecha_creacion) VALUES (5,'Martin','Sosa','40444555','martin.sosa@prueba.com','$2a$11$hd.uSqkdBBsu9mUyAsu0Qu/WxF2v9TQPEI1bLjxu25obWtEotE8Ty','activo','2026-09-24 07:25:22');
+INSERT INTO alumnos (id, nombre, apellido, dni, email, password_hash, estado, fecha_creacion) VALUES (6,'Sofia','Ruiz','40555666','sofia.ruiz@prueba.com','$2a$11$hd.uSqkdBBsu9mUyAsu0Qu/WxF2v9TQPEI1bLjxu25obWtEotE8Ty','activo','2026-09-24 07:25:22');
+
+-- categorias
+INSERT INTO categorias (id, nombre, descripcion) VALUES (1,'Programación','Cursos de desarrollo de software');
+INSERT INTO categorias (id, nombre, descripcion) VALUES (2,'Diseño','Diseño gráfico y web');
+INSERT INTO categorias (id, nombre, descripcion) VALUES (3,'Idiomas','Cursos de idiomas');
+INSERT INTO categorias (id, nombre, descripcion) VALUES (4,'Marketing','Marketing digital y redes');
+
+-- cursos
+INSERT INTO cursos (id, titulo, descripcion, profesor_id, categoria_id, precio, estado, nivel, fecha_creacion) VALUES (2,'Introducción a VB.NET','Primeros pasos con Visual Basic',1,1,15000.00,'publicado','intermedio','2026-09-24 07:25:22');
+INSERT INTO cursos (id, titulo, descripcion, profesor_id, categoria_id, precio, estado, nivel, fecha_creacion) VALUES (3,'Diseño web básico','HTML y CSS desde cero',1,2,12000.00,'publicado','inicial','2026-09-24 07:25:22');
+
+-- lecciones
+INSERT INTO lecciones (id, curso_id, titulo, contenido, orden) VALUES (1,2,'Instalar Visual Studio','Descarga e instalación',1);
+INSERT INTO lecciones (id, curso_id, titulo, contenido, orden) VALUES (2,2,'Variables y tipos','Dim, As, tipos básicos',2);
+INSERT INTO lecciones (id, curso_id, titulo, contenido, orden) VALUES (3,2,'Condicionales','If, Else, Select Case',3);
+INSERT INTO lecciones (id, curso_id, titulo, contenido, orden) VALUES (4,2,'Formularios','Controles y eventos',4);
+INSERT INTO lecciones (id, curso_id, titulo, contenido, orden) VALUES (5,3,'Estructura HTML','Etiquetas básicas',1);
+INSERT INTO lecciones (id, curso_id, titulo, contenido, orden) VALUES (6,3,'Estilos con CSS','Selectores y propiedades',2);
+INSERT INTO lecciones (id, curso_id, titulo, contenido, orden) VALUES (7,3,'Maquetado','Flexbox',3);
+
+-- inscripciones
+INSERT INTO inscripciones (id, alumno_id, curso_id, numero_orden, monto, estado, autorizado_por, completado, fecha_solicitud) VALUES (1,1,2,'ORD-0001',15000.00,'aceptada',1,0,'2026-09-01 10:00:00');
+INSERT INTO inscripciones (id, alumno_id, curso_id, numero_orden, monto, estado, autorizado_por, completado, fecha_solicitud) VALUES (2,3,2,'ORD-0002',15000.00,'aceptada',1,0,'2026-09-10 11:30:00');
+INSERT INTO inscripciones (id, alumno_id, curso_id, numero_orden, monto, estado, autorizado_por, completado, fecha_solicitud) VALUES (3,4,2,'ORD-0003',15000.00,'aceptada',1,0,'2026-08-20 09:15:00');
+INSERT INTO inscripciones (id, alumno_id, curso_id, numero_orden, monto, estado, autorizado_por, completado, fecha_solicitud) VALUES (4,5,2,'ORD-0004',15000.00,'pendiente_pago',NULL,0,'2026-09-20 18:00:00');
+INSERT INTO inscripciones (id, alumno_id, curso_id, numero_orden, monto, estado, autorizado_por, completado, fecha_solicitud) VALUES (5,6,3,'ORD-0005',12000.00,'aceptada',1,0,'2026-09-05 14:00:00');
+INSERT INTO inscripciones (id, alumno_id, curso_id, numero_orden, monto, estado, autorizado_por, completado, fecha_solicitud) VALUES (6,1,3,'ORD-0006',12000.00,'aceptada',1,0,'2026-08-15 16:45:00');
+
+-- progreso_leccion
+INSERT INTO progreso_leccion (id, inscripcion_id, leccion_id, completada, fecha_completado) VALUES (1,1,1,1,'2026-09-24 07:25:22');
+INSERT INTO progreso_leccion (id, inscripcion_id, leccion_id, completada, fecha_completado) VALUES (2,1,2,1,'2026-09-24 07:25:22');
+INSERT INTO progreso_leccion (id, inscripcion_id, leccion_id, completada, fecha_completado) VALUES (3,3,1,1,'2026-09-24 07:25:22');
+INSERT INTO progreso_leccion (id, inscripcion_id, leccion_id, completada, fecha_completado) VALUES (4,3,2,1,'2026-09-24 07:25:22');
+INSERT INTO progreso_leccion (id, inscripcion_id, leccion_id, completada, fecha_completado) VALUES (5,3,3,1,'2026-09-24 07:25:22');
+INSERT INTO progreso_leccion (id, inscripcion_id, leccion_id, completada, fecha_completado) VALUES (6,3,4,1,'2026-09-24 07:25:22');
+INSERT INTO progreso_leccion (id, inscripcion_id, leccion_id, completada, fecha_completado) VALUES (7,5,5,1,'2026-09-24 07:25:22');
+INSERT INTO progreso_leccion (id, inscripcion_id, leccion_id, completada, fecha_completado) VALUES (8,6,5,1,'2026-09-24 07:25:22');
+INSERT INTO progreso_leccion (id, inscripcion_id, leccion_id, completada, fecha_completado) VALUES (9,6,6,1,'2026-09-24 07:25:22');
+INSERT INTO progreso_leccion (id, inscripcion_id, leccion_id, completada, fecha_completado) VALUES (10,6,7,1,'2026-09-24 07:25:22');
