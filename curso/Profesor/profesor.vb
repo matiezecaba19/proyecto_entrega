@@ -1,9 +1,7 @@
-'importo para poder atrapar los errores de MariaDB (MySqlException)
+'importo para usar MySqlException
 Imports MySqlConnector
 
-'FORM DEL PROFESOR
-'aca solo esta la pantalla: validar, mostrar y avisar
-'todo lo que toca la base esta en ServiceProfesor
+'PANEL DEL PROFESOR (las consultas estan en ServiceProfesor)
 Public Class profesor
 
     'al abrir el form
@@ -19,10 +17,10 @@ Public Class profesor
 
     'cuando cambia de pestaña
     Private Sub tab_profesor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tab_profesor.SelectedIndexChanged
-        'si entra a mis alumnos recargo el combo, por si creo o borro cursos en la otra pestaña
+        'al entrar a mis alumnos recargo el combo por si cambiaron los cursos
         If tab_profesor.SelectedTab Is tab_alumnos Then
             CargarComboCursosAlumnos()
-            'arranca mostrando todos
+            'muestro todos al principio
             lst_filtroAvance.SelectedIndex = 0
             CargarGrillaAlumnos()
         End If
@@ -40,7 +38,7 @@ Public Class profesor
             dgv_cursos.Columns("descripcion").Visible = False
             dgv_cursos.Columns("categoria_id").Visible = False
 
-            'pongo lindos los titulos de las columnas
+            'cambio los titulos de las columnas
             dgv_cursos.Columns("titulo").HeaderText = "Título"
             dgv_cursos.Columns("categoria").HeaderText = "Categoría"
             dgv_cursos.Columns("precio").HeaderText = "Precio"
@@ -57,7 +55,7 @@ Public Class profesor
     'cargo el combo con las categorias de la base
     Sub CargarComboCategorias()
         Try
-            'se ve el nombre pero por atras guarda el id
+            'muestro el nombre y guardo el id
             cmb_categoria.DisplayMember = "nombre"
             cmb_categoria.ValueMember = "id"
             cmb_categoria.DataSource = ServiceProfesor.ListarCategorias()
@@ -103,7 +101,7 @@ Public Class profesor
 
     'boton agregar curso (alta)
     Private Sub btn_guardar_Click(sender As Object, e As EventArgs) Handles btn_guardar.Click
-        'si tiene id es un curso que ya existe, para eso esta modificar
+        'si ya tiene id el curso existe, para eso esta modificar
         If txt_idCurso.Text <> "" Then
             MessageBox.Show("Ese curso ya existe, usá Modificar. Para cargar uno nuevo apretá Limpiar.")
             Return
@@ -112,7 +110,7 @@ Public Class profesor
         If Not DatosValidos() Then Return
 
         Try
-            'SelectedValue tiene el id de la categoria elegida
+            'con SelectedValue paso el id de la categoria
             ServiceProfesor.AgregarCurso(ServiceAutenticacion.UsuarioActual.id, txt_titulo.Text.Trim(),
                                          txt_descripcion.Text.Trim(), CInt(cmb_categoria.SelectedValue),
                                          nud_precio.Value, cmb_nivel.Text, cmb_estado.Text)
@@ -170,7 +168,7 @@ Public Class profesor
             LimpiarForm()
 
         Catch ex As MySqlException
-            'error 1451 = el curso tiene inscripciones y la base no deja borrarlo
+            'error 1451: el curso tiene alumnos inscriptos
             If ex.Number = 1451 Then
                 MessageBox.Show("No se puede eliminar porque tiene alumnos inscriptos. Podés ponerlo en estado cerrado.")
             Else
@@ -196,7 +194,7 @@ Public Class profesor
         cmb_estado.Text = fila.Cells("estado").Value.ToString()
     End Sub
 
-    'buscador: filtra la grilla mientras escribe
+    'filtro la grilla mientras se escribe
     Private Sub txt_buscar_TextChanged(sender As Object, e As EventArgs) Handles txt_buscar.TextChanged
         CargarGrilla(txt_buscar.Text.Trim())
     End Sub
@@ -216,7 +214,7 @@ Public Class profesor
 
     'cargo en la grilla los alumnos del curso elegido, segun el filtro de la lista
     Sub CargarGrillaAlumnos()
-        'si todavia no hay curso elegido (o no tiene cursos) dejo la grilla vacia
+        'si no hay curso elegido dejo la grilla vacia
         If cmb_filtroCurso.SelectedValue Is Nothing OrElse lst_filtroAvance.SelectedIndex = -1 Then
             dgv_alumnos.DataSource = Nothing
             lbl_cantidadAlumnos.Text = "Alumnos inscriptos: 0"
@@ -224,7 +222,7 @@ Public Class profesor
         End If
 
         Try
-            'le paso la posicion elegida en la lista: 0 todos, 1 sin empezar, 2 en curso, 3 finalizados
+            'mando la opcion de la lista (0 todos, 1 sin empezar, 2 en curso, 3 finalizados)
             dgv_alumnos.DataSource = ServiceProfesor.ListarAlumnos(CInt(cmb_filtroCurso.SelectedValue),
                                                                    ServiceAutenticacion.UsuarioActual.id,
                                                                    lst_filtroAvance.SelectedIndex)
@@ -271,7 +269,7 @@ Public Class profesor
             lbl_valorDni.Text = fila("dni").ToString()
             txt_infoEmail.Text = fila("email").ToString()
             lbl_valorEstado.Text = fila("estado").ToString()
-            'si todavia no escribio nada viene NULL y ToString lo deja vacio
+            'si la descripcion es NULL queda vacia
             txt_infoDescripcion.Text = fila("descripcion").ToString()
             lbl_valorFecha.Text = CDate(fila("fecha_creacion")).ToString("dd/MM/yyyy")
 
@@ -311,7 +309,7 @@ Public Class profesor
             MessageBox.Show("Datos actualizados")
 
         Catch ex As MySqlException
-            'error 1062 = ese email ya lo tiene otro profesor
+            'error 1062: email repetido
             If ex.Number = 1062 Then
                 MessageBox.Show("Ese email ya está registrado")
                 txt_infoEmail.Focus()
@@ -325,7 +323,7 @@ Public Class profesor
 
     '---------------------- GENERAL ----------------------
 
-    'cerrar sesion: al cerrar este form el login vuelve a aparecer
+    'cerrar sesion (vuelve al login)
     Private Sub btn_cerrarSesion_Click(sender As Object, e As EventArgs) Handles btn_cerrarSesion.Click
         Me.Close()
     End Sub

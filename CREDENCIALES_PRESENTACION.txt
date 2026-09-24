@@ -1,22 +1,3 @@
-=====================================================================
-  CREDENCIALES - Sistema de Gestion de Cursos (VB.NET + MariaDB)
-=====================================================================
-
----------------------------------------------------------------------
-1. BASE DE DATOS (MariaDB 11.8)
----------------------------------------------------------------------
-  Servidor:    localhost  (o 127.0.0.1)
-  Puerto:      3306
-  Usuario:     root
-  Contraseña:  matias123
-  Base:        proyecto
-
-  Es la misma que usa la app en curso\conexionBD.vb.
-  Para verla: accesos directos "HeidiSQL" o "MariaDB" del escritorio.
-
----------------------------------------------------------------------
-2. USUARIOS DE LA APP (se entra con DNI + contraseña)
----------------------------------------------------------------------
   ROL        NOMBRE             DNI        CONTRASEÑA
   ---------  -----------------  ---------  -----------
   Admin      Matias Caballero   43025150   matias123
@@ -28,41 +9,4 @@
   Alumno     Martin Sosa        40444555   alumno123
   Alumno     Sofia Ruiz         40555666   alumno123
 
-  Todos estan activos. El que tiene el panel completo es el PROFESOR.
 
----------------------------------------------------------------------
-3. DATOS DE PRUEBA CARGADOS (para mostrar)
----------------------------------------------------------------------
-  Cursos de Juan Perez:
-    - Introduccion a VB.NET  (4 lecciones)
-        Ana 2/4 (en curso), Carlos 0/4 (sin empezar), Lucia 4/4 (finalizada)
-        Martin esta esperando el pago -> NO aparece en Mis alumnos
-    - Diseño web basico      (3 lecciones)
-        Sofia 1/3 (en curso), Ana 3/3 (finalizada)
-
-  Categorias: Programacion, Diseño, Idiomas, Marketing
-
----------------------------------------------------------------------
-4. RECORRIDO PARA LA PRESENTACION (entrar como profesor)
----------------------------------------------------------------------
-  1) F5 -> DNI 30111222 / contraseña profesor123
-
-  2) Pestaña MIS CURSOS  (CRUD, grilla, combo, JOIN)
-     - Agregar un curso (combo de categorias cargado desde la base)
-     - Escribir en el buscador -> filtra solo
-     - Click en el curso -> Modificar -> Eliminar
-     - Intentar eliminar "Introduccion a VB.NET" -> no deja porque
-       tiene alumnos inscriptos (error 1451 de la base)
-
-  3) Pestaña MIS ALUMNOS  (list, muchos a muchos, JOIN tabla puente)
-     - Elegir "Introduccion a VB.NET" en el combo
-     - Ir tocando Todos / Sin empezar / En curso / Finalizados
-
-  4) Pestaña MI INFORMACION  (DataReader)
-     - Datos cargados desde la base, editar la descripcion y guardar
-
-  5) Cerrar sesion -> vuelve al login
-
-  Registro: desde el login "¿No tenés cuenta? Registrate".
-  El usuario nuevo queda "pendiente" y no puede entrar hasta que
-  lo apruebe el admin.

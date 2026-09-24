@@ -2,14 +2,13 @@
 Imports MySqlConnector
 
 'SERVICIO DEL PROFESOR
-'aca esta todo lo que habla con la base, el form profesor solo muestra y valida
-'todo es Shared, se usa sin New (igual que ServiceAutenticacion)
+'consultas del panel del profesor
 Public Class ServiceProfesor
 
     '---------------------- CURSOS ----------------------
 
     'traigo los cursos del profesor, con el JOIN saco el nombre de la categoria
-    'el LIKE es para el buscador, si el filtro esta vacio trae todos
+    'uso LIKE para el buscador
     Public Shared Function ListarCursos(profesorId As Integer, filtro As String) As DataTable
         Dim sql As String =
             "SELECT c.id, c.titulo, c.descripcion, c.categoria_id, ca.nombre AS categoria, " &
@@ -99,8 +98,7 @@ Public Class ServiceProfesor
     End Sub
 
     'baja de un curso
-    'las lecciones se borran solas (ON DELETE CASCADE)
-    'si tiene inscripciones la base tira el error 1451, lo atrapa el form
+    'las lecciones se borran por el ON DELETE CASCADE
     Public Shared Sub EliminarCurso(cursoId As Integer, profesorId As Integer)
         Dim sql As String = "DELETE FROM cursos WHERE id = @id AND profesor_id = @profesor;"
 
@@ -118,9 +116,9 @@ Public Class ServiceProfesor
 
     'traigo los alumnos de un curso con la inscripcion aceptada (ya pagaron)
     'JOIN con la tabla puente: alumnos -> inscripciones -> cursos
-    'filtroAvance: 0 todos, 1 sin empezar, 2 en curso, 3 finalizados (el orden de la lista)
+    'filtroAvance: 0 todos, 1 sin empezar, 2 en curso, 3 finalizados
     Public Shared Function ListarAlumnos(cursoId As Integer, profesorId As Integer, filtroAvance As Integer) As DataTable
-        'completadas y total las cuento con un SELECT adentro de otro
+        'cuento completadas y total con subconsultas
         Dim sql As String =
             "SELECT a.id, CONCAT(a.nombre, ' ', a.apellido) AS alumno, a.email, i.fecha_solicitud, " &
             "(SELECT COUNT(*) FROM progreso_leccion AS p " &
@@ -131,7 +129,7 @@ Public Class ServiceProfesor
             "JOIN cursos AS c ON c.id = i.curso_id " &
             "WHERE c.id = @curso AND c.profesor_id = @profesor AND i.estado = 'aceptada' "
 
-        'agrego el filtro segun lo que eligio en la lista
+        'agrego el filtro de la lista
         Select Case filtroAvance
             Case 1 'sin empezar
                 sql = sql & "HAVING completadas = 0 "
@@ -178,8 +176,7 @@ Public Class ServiceProfesor
         End Using
     End Function
 
-    'guardo los cambios de sus datos (el dni no se toca porque es con lo que entra)
-    'si el email ya lo tiene otro profesor la base tira el error 1062, lo atrapa el form
+    'guardo los datos del profesor (el dni no se cambia)
     Public Shared Sub GuardarDatos(profesorId As Integer, nombre As String, apellido As String,
                                    email As String, descripcion As String)
         Dim sql As String = "UPDATE profesores SET nombre = @nombre, apellido = @apellido, email = @email, " &
