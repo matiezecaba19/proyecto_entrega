@@ -199,6 +199,20 @@ Public Class profesor
         CargarGrilla(txt_buscar.Text.Trim())
     End Sub
 
+    'boton lecciones: abro las lecciones del curso elegido
+    Private Sub btn_lecciones_Click(sender As Object, e As EventArgs) Handles btn_lecciones.Click
+        If txt_idCurso.Text = "" Then
+            MessageBox.Show("Elegí un curso de la grilla")
+            Return
+        End If
+
+        'le paso el curso al form de lecciones
+        Dim frm As New lecciones()
+        frm.cursoId = CInt(txt_idCurso.Text)
+        frm.tituloCurso = txt_titulo.Text
+        frm.ShowDialog()
+    End Sub
+
     '---------------------- PESTAÑA MIS ALUMNOS ----------------------
 
     'cargo el combo con los cursos del profesor

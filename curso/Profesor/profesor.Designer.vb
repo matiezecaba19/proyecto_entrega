@@ -186,7 +186,7 @@ Partial Class profesor
         grp_datosCurso.Controls.Add(lbl_idCurso)
         grp_datosCurso.Location = New Point(540, 10)
         grp_datosCurso.Name = "grp_datosCurso"
-        grp_datosCurso.Size = New Size(310, 480)
+        grp_datosCurso.Size = New Size(310, 430)
         grp_datosCurso.TabIndex = 4
         grp_datosCurso.TabStop = False
         grp_datosCurso.Text = "Datos del curso"
@@ -199,6 +199,7 @@ Partial Class profesor
         lbl_idCurso.Size = New Size(18, 15)
         lbl_idCurso.TabIndex = 0
         lbl_idCurso.Text = "ID"
+        lbl_idCurso.Visible = False
         '
         ' txt_idCurso
         '
@@ -208,11 +209,12 @@ Partial Class profesor
         txt_idCurso.Size = New Size(80, 23)
         txt_idCurso.TabIndex = 1
         txt_idCurso.TabStop = False
+        txt_idCurso.Visible = False
         '
         ' lbl_titulo
         '
         lbl_titulo.AutoSize = True
-        lbl_titulo.Location = New Point(15, 75)
+        lbl_titulo.Location = New Point(15, 25)
         lbl_titulo.Name = "lbl_titulo"
         lbl_titulo.Size = New Size(37, 15)
         lbl_titulo.TabIndex = 2
@@ -220,7 +222,7 @@ Partial Class profesor
         '
         ' txt_titulo
         '
-        txt_titulo.Location = New Point(15, 93)
+        txt_titulo.Location = New Point(15, 43)
         txt_titulo.MaxLength = 30
         txt_titulo.Name = "txt_titulo"
         txt_titulo.Size = New Size(280, 23)
@@ -229,7 +231,7 @@ Partial Class profesor
         ' lbl_descripcion
         '
         lbl_descripcion.AutoSize = True
-        lbl_descripcion.Location = New Point(15, 125)
+        lbl_descripcion.Location = New Point(15, 75)
         lbl_descripcion.Name = "lbl_descripcion"
         lbl_descripcion.Size = New Size(69, 15)
         lbl_descripcion.TabIndex = 4
@@ -237,7 +239,7 @@ Partial Class profesor
         '
         ' txt_descripcion
         '
-        txt_descripcion.Location = New Point(15, 143)
+        txt_descripcion.Location = New Point(15, 93)
         txt_descripcion.Multiline = True
         txt_descripcion.Name = "txt_descripcion"
         txt_descripcion.ScrollBars = ScrollBars.Vertical
@@ -247,7 +249,7 @@ Partial Class profesor
         ' lbl_categoria
         '
         lbl_categoria.AutoSize = True
-        lbl_categoria.Location = New Point(15, 213)
+        lbl_categoria.Location = New Point(15, 163)
         lbl_categoria.Name = "lbl_categoria"
         lbl_categoria.Size = New Size(58, 15)
         lbl_categoria.TabIndex = 6
@@ -257,7 +259,7 @@ Partial Class profesor
         '
         cmb_categoria.DropDownStyle = ComboBoxStyle.DropDownList
         cmb_categoria.FormattingEnabled = True
-        cmb_categoria.Location = New Point(15, 231)
+        cmb_categoria.Location = New Point(15, 181)
         cmb_categoria.Name = "cmb_categoria"
         cmb_categoria.Size = New Size(280, 23)
         cmb_categoria.TabIndex = 7
@@ -265,7 +267,7 @@ Partial Class profesor
         ' lbl_precio
         '
         lbl_precio.AutoSize = True
-        lbl_precio.Location = New Point(15, 263)
+        lbl_precio.Location = New Point(15, 213)
         lbl_precio.Name = "lbl_precio"
         lbl_precio.Size = New Size(40, 15)
         lbl_precio.TabIndex = 8
@@ -274,7 +276,7 @@ Partial Class profesor
         ' nud_precio
         '
         nud_precio.DecimalPlaces = 2
-        nud_precio.Location = New Point(15, 281)
+        nud_precio.Location = New Point(15, 231)
         nud_precio.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
         nud_precio.Name = "nud_precio"
         nud_precio.Size = New Size(130, 23)
@@ -284,7 +286,7 @@ Partial Class profesor
         ' lbl_nivel
         '
         lbl_nivel.AutoSize = True
-        lbl_nivel.Location = New Point(155, 263)
+        lbl_nivel.Location = New Point(155, 213)
         lbl_nivel.Name = "lbl_nivel"
         lbl_nivel.Size = New Size(34, 15)
         lbl_nivel.TabIndex = 10
@@ -295,7 +297,7 @@ Partial Class profesor
         cmb_nivel.DropDownStyle = ComboBoxStyle.DropDownList
         cmb_nivel.FormattingEnabled = True
         cmb_nivel.Items.AddRange(New Object() {"inicial", "intermedio", "avanzado"})
-        cmb_nivel.Location = New Point(155, 281)
+        cmb_nivel.Location = New Point(155, 231)
         cmb_nivel.Name = "cmb_nivel"
         cmb_nivel.Size = New Size(140, 23)
         cmb_nivel.TabIndex = 11
@@ -303,7 +305,7 @@ Partial Class profesor
         ' lbl_estado
         '
         lbl_estado.AutoSize = True
-        lbl_estado.Location = New Point(15, 313)
+        lbl_estado.Location = New Point(15, 263)
         lbl_estado.Name = "lbl_estado"
         lbl_estado.Size = New Size(42, 15)
         lbl_estado.TabIndex = 12
@@ -314,14 +316,14 @@ Partial Class profesor
         cmb_estado.DropDownStyle = ComboBoxStyle.DropDownList
         cmb_estado.FormattingEnabled = True
         cmb_estado.Items.AddRange(New Object() {"borrador", "publicado", "cerrado"})
-        cmb_estado.Location = New Point(15, 331)
+        cmb_estado.Location = New Point(15, 281)
         cmb_estado.Name = "cmb_estado"
         cmb_estado.Size = New Size(280, 23)
         cmb_estado.TabIndex = 13
         '
         ' btn_nuevo
         '
-        btn_nuevo.Location = New Point(15, 368)
+        btn_nuevo.Location = New Point(15, 318)
         btn_nuevo.Name = "btn_nuevo"
         btn_nuevo.Size = New Size(135, 30)
         btn_nuevo.TabIndex = 14
@@ -330,7 +332,7 @@ Partial Class profesor
         '
         ' btn_guardar
         '
-        btn_guardar.Location = New Point(160, 368)
+        btn_guardar.Location = New Point(160, 318)
         btn_guardar.Name = "btn_guardar"
         btn_guardar.Size = New Size(135, 30)
         btn_guardar.TabIndex = 15
@@ -339,7 +341,7 @@ Partial Class profesor
         '
         ' btn_modificar
         '
-        btn_modificar.Location = New Point(15, 404)
+        btn_modificar.Location = New Point(15, 354)
         btn_modificar.Name = "btn_modificar"
         btn_modificar.Size = New Size(135, 30)
         btn_modificar.TabIndex = 16
@@ -348,7 +350,7 @@ Partial Class profesor
         '
         ' btn_eliminar
         '
-        btn_eliminar.Location = New Point(160, 404)
+        btn_eliminar.Location = New Point(160, 354)
         btn_eliminar.Name = "btn_eliminar"
         btn_eliminar.Size = New Size(135, 30)
         btn_eliminar.TabIndex = 17
@@ -357,7 +359,7 @@ Partial Class profesor
         '
         ' btn_lecciones
         '
-        btn_lecciones.Location = New Point(15, 440)
+        btn_lecciones.Location = New Point(15, 390)
         btn_lecciones.Name = "btn_lecciones"
         btn_lecciones.Size = New Size(280, 30)
         btn_lecciones.TabIndex = 18
